@@ -24,3 +24,12 @@ class Player:
     @influence.setter
     def influence(self, value):
         self.__influence = value
+    
+    @property
+    def coins(self):
+        return self.__coins
+    
+    @coins.setter
+    def coins(self, value):
+        self.__coins = int(value)
+        
