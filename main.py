@@ -20,7 +20,7 @@ def print_menu_and_select():
     print ("0. Salir")
     return int(input())
     
-def inicial_menu():
+def initial_menu():
     while True:
         selection = print_menu_and_select()
         if selection == 0:
@@ -28,5 +28,11 @@ def inicial_menu():
         if selection == 1:
             create_player()
 
+# crear funcion que muestre influencias del jugador en turno y coins del resto
+# crear fx que muestre cada accion
+# crear menu que permita seleccionar acciones y dar la oportunidad a los demas
+# de desafiarla o contraatacarla
+# crear log del turno
+
 if __name__ == "__main__":
-    inicial_menu()
+    initial_menu()
