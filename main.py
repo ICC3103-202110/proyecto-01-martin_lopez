@@ -2,11 +2,18 @@
 """
 
 """
-
+from numpy import random
 from Player import Player
 
 players = []
-influence_deck = []
+def shuffle_deck():
+    deck = ["Duque", "Duque", "Duque", "Asesino", "Asesino", "Asesino", 
+    "Capitán", "Capitán", "Capitán", "Embajador", "Embajador", "Embajador", 
+    "Condesa", "Condesa", "Condesa"]
+    random.shuffle(deck)
+    return deck
+
+influence_deck = shuffle_deck()
 
 def create_player():
     name = input("ingresa el nombre del jugador ")
@@ -27,6 +34,7 @@ def initial_menu():
             break
         if selection == 1:
             create_player()
+            
 
 # crear funcion que muestre influencias del jugador en turno y coins del resto
 # crear fx que muestre cada accion
