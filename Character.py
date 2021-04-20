@@ -13,6 +13,7 @@ class Character:
         return
     
     def foreign_aid(nplayer, name_last_influence):
+        # evito hacer una fx de bloqueo en Duke
         if name_last_influence != "Duke":
             players[nplayer].coins += 2
             return
