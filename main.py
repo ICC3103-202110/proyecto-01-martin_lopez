@@ -18,8 +18,18 @@ influence_deck = shuffle_deck()
 def create_player():
     name = input("ingresa el nombre del jugador ")
     coins = 2
+    influence = []
+    influence.append(influence_deck[0])
+    influence_deck.pop(0)
+    influence.append(influence_deck[0])
+    influence_deck.pop(0)
     #falta que el jugador reciba dos influencias de influence_deck
     players.append(Player(name, influence, coins))
+
+def show_game_status():
+    print("\nJugadores creados:")
+    for (i, _) in enumerate(players):
+        print(f"{i+1}: {players[i].name} - {players[i].influence} - {players[i].coins}monedas")
 
 def print_menu_and_select():
     print ("\nSelecciona una opción:")
@@ -34,6 +44,8 @@ def initial_menu():
             break
         if selection == 1:
             create_player()
+        show_game_status()
+            
             
 
 # crear funcion que muestre influencias del jugador en turno y coins del resto
