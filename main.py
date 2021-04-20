@@ -54,7 +54,7 @@ def show_my_characters():
     print ("2. No")
     return int(input())
 
-def initialize_game():
+def initial_menu():
     while True:
         selection = print_menu_and_select()
         if selection == 0:
@@ -64,6 +64,7 @@ def initialize_game():
         if len(players) == 4: #si se ingresaron 4 jugadores el juego parte automáticamente
             break
 
+def initialize_game():
     while True: #ciclo hasta que termine el juego
         for i in range(len(players)): #cada jugador realiza una acción por turno
             show_game_status() #muestra estado actual del juego antes de que comienze el turno de un jugador
@@ -87,5 +88,7 @@ def initialize_game():
 
 
 
+
 if __name__ == "__main__":
+    initial_menu()
     initialize_game()
