@@ -71,7 +71,9 @@ def initialize_game():
             print ("\n"+"Turno de "+players[i].name)
             show = show_my_characters() #si el jugador quiere ver sus cartas
             if show == 1:
-                print(players[i].influence)
+                print("\nTus cartas son:")
+                for j in players[i].influence:
+                    print (j)
             action = print_actions_and_select()
             
         if len(players) == 1: #solo queda un jugador, termina el juego
