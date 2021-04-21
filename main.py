@@ -54,6 +54,12 @@ def show_my_characters():
     print ("2. No")
     return int(input())
 
+def show_log_game():
+    print ("\n¿Desea ver el log del juego?")
+    print ("1. Si")
+    print ("2. No")
+    return int(input())
+
 def initial_menu():
     while True:
         selection = print_menu_and_select()
@@ -65,19 +71,43 @@ def initial_menu():
             break
 
 def initialize_game():
+    log=[]
+    shift_counter = 0 #contador de turnos
     while True: #ciclo hasta que termine el juego
+        shift_counter += 1 
+        log.append("Turno "+str(shift_counter)) #agrega contador de turnos al log del juego
         for i in range(len(players)): #cada jugador realiza una acción por turno
             show_game_status() #muestra estado actual del juego antes de que comienze el turno de un jugador
-            print ("\n"+"Turno de "+players[i].name)
-            show = show_my_characters() #si el jugador quiere ver sus cartas
-            if show == 1:
+            print ("\n"+"¡Juega "+players[i].name+"!")
+            show_characters = show_my_characters() #si el jugador quiere ver sus cartas
+            if show_characters == 1:
                 print("\nTus cartas son:")
                 for j in players[i].influence:
                     print (j)
             action = print_actions_and_select()
-            
-        if len(players) == 1: #solo queda un jugador, termina el juego
+            if action == 1:
+                log.append(players[i].name+" obtiene 1 moneda por Ingresos") #no puede ser desafiado ni contraatacado
+            if action == 2:
+                pass
+            if action == 3:
+                log.append(players[i].name+" paga 7 monedas y realiza un Golpe") #no puede ser desafiado ni contraatacado
+            if action == 4:
+                pass
+            if action == 5:
+                pass
+            if action == 6:
+                pass
+            if action == 7:
+                pass
+        log.append(" ") #agrega un espacio entre cada turno
+        show_log = show_log_game()
+        if show_log == 1: #muestra el log de todos los turnos
+            for t in range(len(log)):
+                print (log[t])
+        
+        if len(players) == 1: #solo queda un jugador, termina el juego.
             break
+
             
 
 
