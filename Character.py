@@ -19,19 +19,39 @@ class Character:
             return
         
     def coup():
-        pass
+        j = int(input("\nIngresa el número del jugador al cual le aplicarás el golpe "))
+        players[j-1].coins -= 7
+        return
     
-class Duke:
-    pass
+class Duke(Character):
+    def __init__(self, name):
+        Character.__init__(self, name)
+    
+    def Tax():
+        
 
-class Captain:
-    pass
+class Captain(Character):
+    def __init__(self, name):
+        Character.__init__(self, name)
+    
+    def Steal():
 
-class Assassin:
-    pass
+class Assassin(Character):
+    def __init__(self, name):
+        Character.__init__(self, name)
+    
+    def Assassinate():
+        
 
-class Ambassador:
-    pass
+class Ambassador(Character):
+    def __init__(self, name):
+        Character.__init__(self, name)
+    
+    def Exchange():
+        
 
-class contessa:
-    pass
+class contessa(Character):
+    def __init__(self, name):
+        Character.__init__(self, name)
+        
+    def 
