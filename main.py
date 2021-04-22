@@ -4,6 +4,7 @@
 """
 from numpy import random
 from Player import Player
+#from Character import Character
 
 players = []
 def shuffle_deck(): #baraja las cartas de manera aleatoria
@@ -110,12 +111,9 @@ def initialize_game():
 
             
 
-
-# crear funcion que muestre influencias del jugador en turno y coins del resto [LISTO]
-# crear fx que muestre cada accion [LISTO]
+# si el jugador comienza el turno con 10 monedas, esta obligado a ejecutar coup. agregarlo
 # crear menu que permita seleccionar acciones [LISTO] y dar la oportunidad a los demas
 # de desafiarla o contraatacarla 
-# crear log del turno
 # mejorar calidad en la que se imprimen las cartas de un jugador (que no sea una lista)
 
 
