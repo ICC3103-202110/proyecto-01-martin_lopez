@@ -8,16 +8,16 @@ class Character:
     def __init__(self, name):
         self.name = name
     
-    def income(nplayer):
+    def income(self, nplayer):
         # nplayer = numero del Player en la lista players
         players[nplayer].coins += 1
         return
     
-    def foreign_aid(nplayer):
+    def foreign_aid(self, nplayer):
         players[nplayer].coins += 2
         return
         
-    def coup(nplayer):
+    def coup(self, nplayer):
         players[nplayer].coins -= 7
         j = int(input("\nIngresa el número del jugador al cual le aplicarás el golpe "))
         players[j-1].influence.pop(random.randint(0,1))
@@ -27,11 +27,11 @@ class Duke(Character):
     def __init__(self, name):
         Character.__init__(self, name)
     
-    def Tax(nplayer):
+    def Tax(self, nplayer):
         players[nplayer].coins += 3
         return
     
-    def Blocks_foreign_aid(nplayer):
+    def Blocks_foreign_aid(self, nplayer):
         players[nplayer].coins -= 2
         return
         
@@ -39,7 +39,7 @@ class Captain(Character):
     def __init__(self, name):
         Character.__init__(self, name)
     
-    def Steal():
+    def Steal(self):
         j = int(input("\nIngresa el número del jugador al cual extorsionarás "))
         if players[j-1].coins == 1:
             players[j-1].coins -= 1
@@ -54,7 +54,7 @@ class Assassin(Character):
     def __init__(self, name):
         Character.__init__(self, name)
     
-    def Assassinate(nplayer):
+    def Assassinate(self, nplayer):
         players[nplayer].coins -= 3
         j = int(input("\nIngresa el número del jugador al cual le quitarás una influencia "))
         players[j-1].influence.pop(random.randint(0,1))
