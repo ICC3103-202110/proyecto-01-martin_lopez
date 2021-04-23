@@ -112,27 +112,35 @@ def initialize_game():
                         print (other_players[l].name+" desafía a "+players[i].name)
                         log.append(other_players[l].name+" desafía a "+players[i].name)
                         if players[i].influence.count("Duque") > 0: #desafia fallido
+                            condition = 0 #Es simplemente una condicion por si es necesario contraatacar o no
                             print (players[i].name+" tiene la carta Duque, desafío fallido.")
                             log.append(players[i].name+" tiene la carta Duque, desafío fallido.")
                             print (other_players[l].influence)
                             turn_card = input(other_players[l].name+" escriba la carta que quiere dar vuelta: ")
                             print (other_players[l].name+" ha perdido la carta: "+turn_card)
                             log.append(other_players[l].name+" ha perdido la carta: "+turn_card)
-                            #de alguna manera hay que borrarle la carta elegida por el jugador de su propia influencia
-                            #tambien el jugador que realiza la acción tiene que devolver la carta al mazo y sacar otra
-                            #la acción se ejecuta si no es contraatacada
-                            turned_around_characters.append(turn_card)  
+                            other_players[l].influence.remove(turn_card)
+                            players[i].influence.remove("Duque") #se le quita la influencia al jugador
+                            players[i].influence.append(influence_deck[0]) #la reemplaza con una del mazo
+                            influence_deck.append("Duque") #se agrega la carta que se quitó al mazo
+                            random.shuffle(influence_deck) #baraja el mazo con la nueva carta cartas
                             break
                         else: #desafio acertado
+                            condition = 1
                             print (players[i].name+" no tiene la carta Duque, desafío correcto.")
                             log.append(players[i].name+" no tiene la carta Duque, desafío correcto.")
                             print (players[i].influence)
                             turn_card = input(players[i].name+" escriba la carta que quiere dar vuelta: ")     
                             print (players[l].name+" ha perdido la carta: "+turn_card)
                             log.append(players[l].name+" ha perdido la carta: "+turn_card)
-                            #de alguna manera hay que borrarle la carta elegida por el jugador de su propia influencia
-                            turned_around_characters.append(turn_card)
-                            break                                                                                     
+                            players[i].influence.remove("Duque") #se le quita la carta que eligió
+                            turned_around_characters.append(turn_card) #la carta queda dada vuelta en una lista visible para todos                          
+                            break
+                if condition == 1:
+                    break         
+                else:
+                    #aqui va la opción de contraatacar
+                    pass  #pass es por mientras                                                                         
                 
             if action == 5:
                 print (players[i].name+" utiliza Asesino")
@@ -150,10 +158,11 @@ def initialize_game():
                             turn_card = input(other_players[l].name+" escriba la carta que quiere dar vuelta: ")
                             print (other_players[l].name+" ha perdido la carta: "+turn_card)
                             log.append(other_players[l].name+" ha perdido la carta: "+turn_card)
-                            #de alguna manera hay que borrarle la carta elegida por el jugador de su propia influencia
-                            #tambien el jugador que realiza la acción tiene que devolver la carta al mazo y sacar otra
-                            #la acción se ejecuta si no es contraatacada
-                            turned_around_characters.append(turn_card)  
+                            other_players[l].influence.remove(turn_card)
+                            players[i].influence.remove("Asesino")
+                            players[i].influence.append(influence_deck[0])
+                            influence_deck.append("Asesino")
+                            random.shuffle(influence_deck) #baraja el mazo con las cartas
                             break
                         else: #desafio acertado
                             print (players[i].name+" no tiene la carta Asesino, desafío correcto.")
@@ -162,7 +171,7 @@ def initialize_game():
                             turn_card = input(players[i].name+" escriba la carta que quiere dar vuelta: ")     
                             print (players[l].name+" ha perdido la carta: "+turn_card)
                             log.append(players[l].name+" ha perdido la carta: "+turn_card)
-                            #de alguna manera hay que borrarle la carta elegida por el jugador de su propia influencia
+                            players[i].influence.remove("Asesino")
                             turned_around_characters.append(turn_card)
                             break
                 
@@ -182,10 +191,11 @@ def initialize_game():
                             turn_card = input(other_players[l].name+" escriba la carta que quiere dar vuelta: ")
                             print (other_players[l].name+" ha perdido la carta: "+turn_card)
                             log.append(other_players[l].name+" ha perdido la carta: "+turn_card)
-                            #de alguna manera hay que borrarle la carta elegida por el jugador de su propia influencia
-                            #tambien el jugador que realiza la acción tiene que devolver la carta al mazo y sacar otra
-                            #la acción se ejecuta si no es contraatacada
-                            turned_around_characters.append(turn_card)  
+                            other_players[l].influence.remove(turn_card)
+                            players[i].influence.remove("Capitán")
+                            players[i].influence.append(influence_deck[0])
+                            influence_deck.append("Capitán")
+                            random.shuffle(influence_deck) #baraja el mazo con las cartas
                             break
                         else: #desafio acertado
                             print (players[i].name+" no tiene la carta Capitán, desafío correcto.")
@@ -194,7 +204,7 @@ def initialize_game():
                             turn_card = input(players[i].name+" escriba la carta que quiere dar vuelta: ")     
                             print (players[l].name+" ha perdido la carta: "+turn_card)
                             log.append(players[l].name+" ha perdido la carta: "+turn_card)
-                            #de alguna manera hay que borrarle la carta elegida por el jugador de su propia influencia
+                            players[i].influence.remove("Capitán")
                             turned_around_characters.append(turn_card)
                             break
                 
@@ -214,10 +224,11 @@ def initialize_game():
                             turn_card = input(other_players[l].name+" escriba la carta que quiere dar vuelta: ")
                             print (other_players[l].name+" ha perdido la carta: "+turn_card)
                             log.append(other_players[l].name+" ha perdido la carta: "+turn_card)
-                            #de alguna manera hay que borrarle la carta elegida por el jugador de su propia influencia
-                            #tambien el jugador que realiza la acción tiene que devolver la carta al mazo y sacar otra
-                            #la acción se ejecuta si no es contraatacada
-                            turned_around_characters.append(turn_card)  
+                            other_players[l].influence.remove(turn_card)
+                            players[i].influence.remove("Embajador")
+                            players[i].influence.append(influence_deck[0])
+                            influence_deck.append("Embajador")
+                            random.shuffle(influence_deck) #baraja el mazo con las cartas
                             break
                         else: #desafio acertado
                             print (players[i].name+" no tiene la carta Embajador, desafío correcto.")
@@ -225,8 +236,8 @@ def initialize_game():
                             print (players[i].influence)
                             turn_card = input(players[i].name+" escriba la carta que quiere dar vuelta: ")     
                             print (players[l].name+" ha perdido la carta: "+turn_card)
-                            log.append(players[l].name+" ha perdido la carta: "+turn_card)
-                            #de alguna manera hay que borrarle la carta elegida por el jugador de su propia influencia
+                            log.append(players[l].name+" ha perdido la carta: "+turn_card)                           
+                            players[i].influence.remove("Embajador")
                             turned_around_characters.append(turn_card)
                             break
                 
