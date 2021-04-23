@@ -92,11 +92,15 @@ def initialize_game():
                 print("\nTus cartas son:")
                 for j in players[i].influence:
                     print (j)
+            if players[i] > 9: #si un jugador tiene 10 monedas o más debe hacer un golpe                
+                log.append(players[i].name+" tiene mas de 9 monedas, por lo que paga 7 monedas y realiza un Golpe.")
+                break
             other_players = players[:] #copia de la lista players
             other_players.pop(i) #lista de jugadores que no es su turno
             random.shuffle(other_players) #de esta manera el desafio o contraataque será de manera aleatoria si mas de uno quiere desafiar
             action = print_actions_and_select()
             if action == 1:
+                print (players[i].name+" obtiene 1 moneda por Ingresos.")
                 log.append(players[i].name+" obtiene 1 moneda por Ingresos.") #no puede ser desafiado ni contraatacado
             if action == 2:
                 pass
