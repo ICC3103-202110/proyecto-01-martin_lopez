@@ -60,6 +60,18 @@ def show_log_game():
     print ("2. No")
     return int(input())
 
+def other_players_turn():
+    a = [] 
+    for k in range(len(players)):
+        a.append(players[k].name) #lista con los jugadores
+    return a
+
+def challenge_player():
+    print ("\n¿Desafiar jugador?")
+    print ("1. Si")
+    print ("2. No")
+    return int(input())
+
 def initial_menu():
     while True:
         selection = print_menu_and_select()
@@ -76,14 +88,19 @@ def initialize_game():
     while True: #ciclo hasta que termine el juego
         shift_counter += 1 
         log.append("Turno "+str(shift_counter)) #agrega contador de turnos al log del juego
-        for i in range(len(players)): #cada jugador realiza una acción por turno
+        turned_around_characters = []
+        for i in range(len(players)): #un turno
             show_game_status() #muestra estado actual del juego antes de que comienze el turno de un jugador
+            print (turned_around_characters)
             print ("\n"+"¡Juega "+players[i].name+"!")
             show_characters = show_my_characters() #si el jugador quiere ver sus cartas
             if show_characters == 1:
                 print("\nTus cartas son:")
                 for j in players[i].influence:
                     print (j)
+            other_players = other_players_turn()
+            other_players.pop(i) #lista de jugadores que no es su turno
+            random.shuffle(other_players) #de esta manera el desafio o contraataque será de manera aleatoria si ambos quieren desafiar
             action = print_actions_and_select()
             if action == 1:
                 log.append(players[i].name+" obtiene 1 moneda por Ingresos") #no puede ser desafiado ni contraatacado
@@ -92,6 +109,20 @@ def initialize_game():
             if action == 3:
                 log.append(players[i].name+" paga 7 monedas y realiza un Golpe") #no puede ser desafiado ni contraatacado
             if action == 4:
+                print (players[i].name+" utiliza Duque")
+                log.append(players[i].name+" utiliza Duque")
+                for l in other_players:
+                    print (l)
+                    challenge = challenge_player()
+                    if challenge == 1:
+                        print (l+" desafía a "+players[i].name)
+                        log.append(l+" desafía a "+players[i].name)
+                        for j in players[i].influence:
+                            if j == "Duque":
+                                print (players[i].name+" tiene la carta Duque")
+                                print (l+" elige que carta dar vuelta:")
+                                pass                      
+                        break
                 pass
             if action == 5:
                 pass
@@ -99,7 +130,7 @@ def initialize_game():
                 pass
             if action == 7:
                 pass
-        log.append(" ") #agrega un espacio entre cada turno
+        log.append(" ") #agrega un espacio para diferenciar los turnos
         show_log = show_log_game()
         if show_log == 1: #muestra el log de todos los turnos
             for t in range(len(log)):
