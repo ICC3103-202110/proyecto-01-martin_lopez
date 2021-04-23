@@ -20,11 +20,10 @@ def create_player():
     name = input("ingresa el nombre del jugador ")
     coins = 2
     influence = []
-    influence.append(influence_deck[0]) #es una manera de darle las dos primeras cartas al jugador ya barajadas
-    influence_deck.pop(0) #quita las cartas entregadas del mazo (influence_deck)
+    influence.append(influence_deck[0]) 
+    influence_deck.pop(0) 
     influence.append(influence_deck[0])
     influence_deck.pop(0)
-    #falta que el jugador reciba dos influencias de influence_deck 
     players.append(Player(name, influence, coins))
 
 def show_game_status(): #muestra fluencia y monedas de todos los jugadores
@@ -114,9 +113,8 @@ def initialize_game():
 # si el jugador comienza el turno con 10 monedas, esta obligado a ejecutar coup. agregarlo
 # crear menu que permita seleccionar acciones [LISTO] y dar la oportunidad a los demas
 # de desafiarla o contraatacarla 
-# mejorar calidad en la que se imprimen las cartas de un jugador (que no sea una lista)
-
-
+# hacer conexión entre las acciones de character con main
+# crear un sistema en que otros jugadores puedan desafiar o contraatacar
 
 
 if __name__ == "__main__":
