@@ -61,9 +61,7 @@ def show_log_game():
     return int(input())
 
 def other_players_turn():
-    a = [] 
-    for k in range(len(players)):
-        a.append(players[k].name) #lista con los jugadores
+    a = players[:] #copia lista con los jugadores
     return a
 
 def challenge_player():
@@ -100,28 +98,31 @@ def initialize_game():
                     print (j)
             other_players = other_players_turn()
             other_players.pop(i) #lista de jugadores que no es su turno
-            random.shuffle(other_players) #de esta manera el desafio o contraataque será de manera aleatoria si ambos quieren desafiar
+            random.shuffle(other_players) #de esta manera el desafio o contraataque será de manera aleatoria si mas de uno quiere desafiar
             action = print_actions_and_select()
             if action == 1:
-                log.append(players[i].name+" obtiene 1 moneda por Ingresos") #no puede ser desafiado ni contraatacado
+                log.append(players[i].name+" obtiene 1 moneda por Ingresos.") #no puede ser desafiado ni contraatacado
             if action == 2:
                 pass
             if action == 3:
-                log.append(players[i].name+" paga 7 monedas y realiza un Golpe") #no puede ser desafiado ni contraatacado
+                log.append(players[i].name+" paga 7 monedas y realiza un Golpe.") #no puede ser desafiado ni contraatacado
             if action == 4:
                 print (players[i].name+" utiliza Duque")
                 log.append(players[i].name+" utiliza Duque")
-                for l in other_players:
-                    print (l)
+                for l in range(len(other_players)):
+                    print (other_players[l].name)
                     challenge = challenge_player()
                     if challenge == 1:
-                        print (l+" desafía a "+players[i].name)
-                        log.append(l+" desafía a "+players[i].name)
-                        for j in players[i].influence:
-                            if j == "Duque":
-                                print (players[i].name+" tiene la carta Duque")
-                                print (l+" elige que carta dar vuelta:")
-                                pass                      
+                        print (other_players[l].name+" desafía a "+players[i].name)
+                        log.append(other_players[l].name+" desafía a "+players[i].name)
+                        if player[i].influence.count("Duque") > 0: #desafia fallido
+                             print (players[i].name+" tiene la carta Duque, desafío fallido.")
+                                print (other_players[l].influence)
+                                turn_card = input(other_players[l].name+" escriba la carta que quiere dar vuelta: ")
+                                print (other_players[l].name+" ha perdido la carta: "+turn_card)
+                                #de alguna manera hay que borrarle la carta elegida por el jugador de su propia influencia
+                                turned_around_characters.append(turn_card)  
+                        else: #desafio acertado                                                                          
                         break
                 pass
             if action == 5:
