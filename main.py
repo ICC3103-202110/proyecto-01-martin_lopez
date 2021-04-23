@@ -65,7 +65,7 @@ def other_players_turn():
     return a
 
 def challenge_player():
-    print ("\n¿Desafiar jugador?")
+    print ("¿Desafiar jugador?")
     print ("1. Si")
     print ("2. No")
     return int(input())
@@ -109,21 +109,34 @@ def initialize_game():
             if action == 4:
                 print (players[i].name+" utiliza Duque")
                 log.append(players[i].name+" utiliza Duque")
-                for l in range(len(other_players)):
-                    print (other_players[l].name)
+                for l in range(len(other_players)): #todos los jugadores eligen si desafian o no, de manera aleatoria
+                    print ("\n"+other_players[l].name)
                     challenge = challenge_player()
                     if challenge == 1:
                         print (other_players[l].name+" desafía a "+players[i].name)
                         log.append(other_players[l].name+" desafía a "+players[i].name)
-                        if player[i].influence.count("Duque") > 0: #desafia fallido
-                             print (players[i].name+" tiene la carta Duque, desafío fallido.")
-                                print (other_players[l].influence)
-                                turn_card = input(other_players[l].name+" escriba la carta que quiere dar vuelta: ")
-                                print (other_players[l].name+" ha perdido la carta: "+turn_card)
-                                #de alguna manera hay que borrarle la carta elegida por el jugador de su propia influencia
-                                turned_around_characters.append(turn_card)  
-                        else: #desafio acertado                                                                          
-                        break
+                        if players[i].influence.count("Duque") > 0: #desafia fallido
+                            print (players[i].name+" tiene la carta Duque, desafío fallido.")
+                            log.append(players[i].name+" tiene la carta Duque, desafío fallido.")
+                            print (other_players[l].influence)
+                            turn_card = input(other_players[l].name+" escriba la carta que quiere dar vuelta: ")
+                            print (other_players[l].name+" ha perdido la carta: "+turn_card)
+                            log.append(other_players[l].name+" ha perdido la carta: "+turn_card)
+                            #de alguna manera hay que borrarle la carta elegida por el jugador de su propia influencia
+                            #tambien el jugador que realiza la acción tiene que devolver la carta al mazo y sacar otra
+                            #la acción se ejecuta si no es contraatacada
+                            turned_around_characters.append(turn_card)  
+                            break
+                        else: #desafio acertado
+                            print (players[i].name+" no tiene la carta Duque, desafío correcto.")
+                            log.append(players[i].name+" no tiene la carta Duque, desafío correcto.")
+                            print (players[i].influence)
+                            turn_card = input(players[i].name+" escriba la carta que quiere dar vuelta: ")     
+                            print (players[l].name+" ha perdido la carta: "+turn_card)
+                            log.append(players[l].name+" ha perdido la carta: "+turn_card)
+                            #de alguna manera hay que borrarle la carta elegida por el jugador de su propia influencia
+                            turned_around_characters.append(turn_card)
+                            break                                                                                     
                 pass
             if action == 5:
                 pass
