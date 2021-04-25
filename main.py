@@ -140,7 +140,7 @@ def initialize_game():
                             turn_card = input(players[i].name+" escriba la carta que quiere dar vuelta: ")     
                             print (players[l].name+" ha perdido la carta: "+turn_card)
                             log.append(players[l].name+" ha perdido la carta: "+turn_card)
-                            players[i].influence.remove("Duque") #se le quita la carta que eligió
+                            players[l].influence.remove("Duque") #se le quita la carta que eligió
                             turned_around_characters.append(turn_card) #la carta queda dada vuelta en una lista visible para todos                          
                             break
                 if condition == 1: #no es necesario contraatacar
@@ -180,7 +180,7 @@ def initialize_game():
                             turn_card = input(players[i].name+" escriba la carta que quiere dar vuelta: ")     
                             print (players[l].name+" ha perdido la carta: "+turn_card)
                             log.append(players[l].name+" ha perdido la carta: "+turn_card)
-                            players[i].influence.remove("Asesino")
+                            players[l].influence.remove("Asesino")
                             turned_around_characters.append(turn_card)
                             break
                 if condition == 1:
@@ -220,7 +220,7 @@ def initialize_game():
                             turn_card = input(players[i].name+" escriba la carta que quiere dar vuelta: ")     
                             print (players[l].name+" ha perdido la carta: "+turn_card)
                             log.append(players[l].name+" ha perdido la carta: "+turn_card)
-                            players[i].influence.remove("Capitán")
+                            players[l].influence.remove("Capitán")
                             turned_around_characters.append(turn_card)
                             break
                 if condition == 1:
@@ -260,7 +260,7 @@ def initialize_game():
                             turn_card = input(players[i].name+" escriba la carta que quiere dar vuelta: ")     
                             print (players[l].name+" ha perdido la carta: "+turn_card)
                             log.append(players[l].name+" ha perdido la carta: "+turn_card)                           
-                            players[i].influence.remove("Embajador")
+                            players[l].influence.remove("Embajador")
                             turned_around_characters.append(turn_card)
                             break
                 if condition == 1:
