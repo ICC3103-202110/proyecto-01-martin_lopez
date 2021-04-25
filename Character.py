@@ -57,14 +57,25 @@ class Assassin(Character):
         all_players[j-1].influence.pop(random.randint(0,1))
         return
         
-#class Ambassador(Character):
-#    def __init__(self, name):
-#        Character.__init__(self, name)
+class Ambassador(Character):
+    def __init__(self, name):
+        Character.__init__(self, name)
     
-#    def Exchange():
+    def Exchange(self, all_players, influence_deck):
+        print("\nTus cartas son:")
+        for j in all_players[int(self)].influence:
+            print (j)
+        a = input("\nIngresa la posición de la 1era que quiere sacar (si no un ´no´): ")
+        a2 = input("\nIngresa la posición de la 2da que quieres sacar (si no un ´no´): ") 
+        if a != "no":
+            all_players[int(self)].influence.pop(a)
+            all_players[int(self)].influence.append(influence_deck[0])
+        if a2 != "no":
+            all_players[int(self)].influence.pop(a2)
+            all_players[int(self)].influence.append(influence_deck[0])
+        return
         
         
-
 #class contessa(Character):
 #    def __init__(self, name):
 #        Character.__init__(self, name)
