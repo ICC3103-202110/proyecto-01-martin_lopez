@@ -4,7 +4,7 @@
 """
 from numpy import random
 from Player import Player
-#from Character import Character
+from Character import Character
 
 players = []
 def shuffle_deck(): #baraja las cartas de manera aleatoria
@@ -92,7 +92,7 @@ def initialize_game():
                 print("\nTus cartas son:")
                 for j in players[i].influence:
                     print (j)
-            if players[i] > 9: #si un jugador tiene 10 monedas o más debe hacer un golpe                
+            if players[i].coins > 9: #si un jugador tiene 10 monedas o más debe hacer un golpe                
                 log.append(players[i].name+" tiene mas de 9 monedas, por lo que paga 7 monedas y realiza un Golpe.")
                 break
             other_players = players[:] #copia de la lista players
@@ -100,10 +100,13 @@ def initialize_game():
             random.shuffle(other_players) #de esta manera el desafio o contraataque será de manera aleatoria si mas de uno quiere desafiar
             action = print_actions_and_select()
             if action == 1:
+                Character.income(i, players) #Llamamos a la función de Character
                 print (players[i].name+" obtiene 1 moneda por Ingresos.")
                 log.append(players[i].name+" obtiene 1 moneda por Ingresos.") #no puede ser desafiado ni contraatacado
             if action == 2:
-                pass
+                Character.foreign_aid(i, players)
+                print (players[i].name+" obtiene 2 monedas por Ayuda Extranjera")
+                log.append(players[i].name+" obtiene 2 monedas por Ayuda Extranjera")
             if action == 3:
                 log.append(players[i].name+" paga 7 monedas y realiza un Golpe.") #no puede ser desafiado ni contraatacado
             if action == 4:
