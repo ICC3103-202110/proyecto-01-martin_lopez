@@ -1,75 +1,72 @@
 # -*- coding: utf-8 -*-
 """
 """
-from main import *
 from numpy import random
 
 class Character:
     def __init__(self, name):
         self.name = name
     
-    def income(self, nplayer):
-        # nplayer = numero del Player en la lista players
-        players[nplayer].coins += 1
-        return
-    
-    def foreign_aid(self, nplayer):
-        players[nplayer].coins += 2
-        return
+    def income(self, all_players):
+        # all_players = numero del Player en la lista players
+        all_players[int(self)].coins += 1
         
-    def coup(self, nplayer):
-        players[nplayer].coins -= 7
+    
+    def foreign_aid(self, all_players):
+        all_players[int(self)].coins += 2
+        
+        
+    def coup(self, all_players):
+        all_players[int(self)].coins -= 7
         j = int(input("\nIngresa el número del jugador al cual le aplicarás el golpe "))
-        players[j-1].influence.pop(random.randint(0,1))
-        return
+        all_players[j-1].influence.pop(random.randint(0,1))
+        
     
 class Duke(Character):
     def __init__(self, name):
         Character.__init__(self, name)
     
-    def Tax(self, nplayer):
-        players[nplayer].coins += 3
-        return
+    def Tax(self, all_players):
+        all_players[int(self)].coins += 3
+        
     
-    def Blocks_foreign_aid(self, nplayer):
-        players[nplayer].coins -= 2
+    def Blocks_foreign_aid(self, all_players):
+        all_players[int(self)].coins -= 2
         return
         
 class Captain(Character):
     def __init__(self, name):
         Character.__init__(self, name)
     
-    def Steal(self):
+    def Steal(self, all_players):
         j = int(input("\nIngresa el número del jugador al cual extorsionarás "))
-        if players[j-1].coins == 1:
-            players[j-1].coins -= 1
+        if all_players[j-1].coins == 1:
+            all_players[j-1].coins -= 1
             return
-        elif players[j-1].coins > 1:
-            players[j-1].coins -= 2
-            return
-        else:
+        elif all_players[j-1].coins > 1:
+            all_players[j-1].coins -= 2
             return
 
 class Assassin(Character):
     def __init__(self, name):
         Character.__init__(self, name)
     
-    def Assassinate(self, nplayer):
-        players[nplayer].coins -= 3
+    def Assassinate(self, all_players):
+        all_players[int(self)].coins -= 3
         j = int(input("\nIngresa el número del jugador al cual le quitarás una influencia "))
-        players[j-1].influence.pop(random.randint(0,1))
+        all_players[j-1].influence.pop(random.randint(0,1))
         return
         
-class Ambassador(Character):
-    def __init__(self, name):
-        Character.__init__(self, name)
+#class Ambassador(Character):
+#    def __init__(self, name):
+#        Character.__init__(self, name)
     
-    def Exchange():
+#    def Exchange():
         
         
 
-class contessa(Character):
-    def __init__(self, name):
-        Character.__init__(self, name)
+#class contessa(Character):
+#    def __init__(self, name):
+#        Character.__init__(self, name)
         
-    def 
+#    def 
