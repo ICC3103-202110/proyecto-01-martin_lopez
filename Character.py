@@ -45,14 +45,21 @@ class Captain(Character):
     def __init__(self, name):
         Character.__init__(self, name)
     
-    def Steal(self, all_players):
+    def Steal(self, all_players, log):
+        for (n, _) in enumerate(all_players):
+            print (f"{n+1}: {all_players[n].name}")
         j = int(input("\nIngresa el número del jugador al cual extorsionarás "))
         if all_players[j-1].coins == 1:
             all_players[j-1].coins -= 1
-            return
+            all_players[int(self)].coins += 1
+            coin= "1 moneda"
+
         elif all_players[j-1].coins > 1:
             all_players[j-1].coins -= 2
-            return
+            all_players[int(self)].coins += 2
+            coin= "2 monedas"
+        log.append(all_players[int(self)].name+" le robó "+coin+" a"+all_players[j-1].name)
+        print (all_players[int(self)].name+" le robó "+coin+" a"+all_players[j-1].name)
 
 class Assassin(Character):
     def __init__(self, name):
@@ -78,17 +85,17 @@ class Ambassador(Character):
     
     def Exchange(self, all_players, influence_deck):
         all_players[int(self)].influence.append(influence_deck[0])
-        all_players[int(self)].influence.append(influence_deck[0])
+        all_players[int(self)].influence.append(influence_deck[0+1])
         print("\nTus cartas son:")
         for j in all_players[int(self)].influence:
             print (j)
         a = int(input("\nIngresa la posición de la 1era que quiere sacar: "))
-        all_players[int(self)].influence.pop(a)
+        all_players[int(self)].influence.pop(a-1)
         print("\nTus cartas son:")
         for j in all_players[int(self)].influence:
             print (j)
         a2 = int(input("\nIngresa la posición de la 2da que quieres sacar: ")) 
-        all_players[int(self)].influence.pop(a2)
+        all_players[int(self)].influence.pop(a2-1)
         random.shuffle(influence_deck)
         
         
