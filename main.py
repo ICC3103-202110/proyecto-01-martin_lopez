@@ -113,11 +113,11 @@ def initialize_game():
         shift_counter += 1 
         log.append("Turno "+str(shift_counter)) #agrega contador de turnos al log del juego
         for i in range(len(players)): #un turno
-            for k in range(len(players)) 
-                if len(players[m].influence) < 1:
-                    print (players[m].name+" ha sido eliminado del juego")
-                    log.append(players[m].name+" ha sido eliminado del juego")
-                    players.pop(m)
+            for k in range(len(players)): 
+                if len(players[k].influence) < 1:
+                    print (players[k].name+" ha sido eliminado del juego")
+                    log.append(players[k].name+" ha sido eliminado del juego")
+                    players.pop(k)
                     break
             show_game_status() #muestra estado actual del juego antes de que comienze el turno de un jugador
             print (turned_around_characters)
