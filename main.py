@@ -352,7 +352,7 @@ def initialize_game():
             print ("¡Felicidades "+players[0].name+"! ¡Has ganado!")
             break
 
-# crear un sistema en que otros jugadores puedan desafiar [LISTO] o contraatacar
+
 
 
 if __name__ == "__main__":
