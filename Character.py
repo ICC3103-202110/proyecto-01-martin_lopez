@@ -84,8 +84,3 @@ class Ambassador(Character):
         return
         
         
-#class contessa(Character):
-#    def __init__(self, name):
-#        Character.__init__(self, name)
-        
-#    def 
