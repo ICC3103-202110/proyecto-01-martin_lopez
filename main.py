@@ -85,6 +85,11 @@ def initialize_game():
         shift_counter += 1 
         log.append("Turno "+str(shift_counter)) #agrega contador de turnos al log del juego
         for i in range(len(players)): #un turno
+            if len(players[i].influence) < 1: #comprobar si al juagador le quedan fluencias
+                print (players[i].name+" ha sido eliminado del juego")
+                log.append(players[i].name+" ha sido eliminado del juego")
+                players.pop(i)
+                break
             show_game_status() #muestra estado actual del juego antes de que comienze el turno de un jugador
             print (turned_around_characters)
             print ("\n"+"¡Juega "+players[i].name+"!")
@@ -276,16 +281,16 @@ def initialize_game():
         if show_log == 1: #muestra el log de todos los turnos
             for t in range(len(log)):
                 print (log[t])
-        
+        for m in range(len(players)):
+            if len(players[m].influence) < 1:
+                print (players[m].name+" ha sido eliminado del juego")
+                log.append(players[m].name+" ha sido eliminado del juego")
+                players.pop(m)
+
         if len(players) == 1: #solo queda un jugador, termina el juego.
+            print ("¡Felicidades "+players[0].name+"! ¡Has ganado!")
             break
 
-            
-
-# si el jugador comienza el turno con 10 monedas, esta obligado a ejecutar coup. agregarlo
-# crear menu que permita seleccionar acciones [LISTO] y dar la oportunidad a los demas
-# de desafiarla [LISTO] o contraatacarla 
-# hacer conexión entre las acciones de character con main
 # crear un sistema en que otros jugadores puedan desafiar [LISTO] o contraatacar
 
 
