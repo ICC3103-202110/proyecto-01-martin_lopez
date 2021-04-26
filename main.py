@@ -18,7 +18,7 @@ influence_deck = shuffle_deck()
 
 def create_player():
     name = input("ingresa el nombre del jugador ")
-    coins = 8 #por mientras
+    coins = 4 #por mientras
     influence = []
     influence.append(influence_deck[0]) 
     influence_deck.pop(0) 
@@ -127,7 +127,7 @@ def initialize_game():
                 for j in players[i].influence:
                     print (j)
             if players[i].coins > 9: #si un jugador tiene 10 monedas o más debe hacer un golpe                
-                Character.coup(i, players, log, turned_around_characters)
+                Character.coup(i, other_players, log, turned_around_characters)
             other_players = players[:] #copia de la lista players
             other_players.pop(i) #lista de jugadores que no es su turno
             random.shuffle(other_players) #de esta manera el desafio o contraataque será de manera aleatoria si mas de uno quiere desafiar
@@ -141,10 +141,10 @@ def initialize_game():
                 print (players[i].name+" obtiene 2 monedas por Ayuda Extranjera")
                 log.append(players[i].name+" obtiene 2 monedas por Ayuda Extranjera")
             if action == 3:
-                Character.coup(i, players, log, turned_around_characters)
+                Character.coup(i, other_players, log, turned_around_characters)
             if action == 4:
-                print (players[i].name+" utiliza Duque")
-                log.append(players[i].name+" utiliza Duque")
+                print (players[i].name+" quiere utilizar Duque")
+                log.append(players[i].name+" quiere utilizar Duque")
                 for l in range(len(other_players)): #todos los jugadores eligen si desafian o no, de manera aleatoria
                     print ("\n"+other_players[l].name)
                     challenge = challenge_player()
@@ -157,7 +157,7 @@ def initialize_game():
                             print (players[i].name+" tiene la carta Duque, desafío fallido.")
                             log.append(players[i].name+" tiene la carta Duque, desafío fallido.")
                             print (other_players[l].influence)
-                            turn_card = input(other_players[l].name+" escriba la carta que quiere dar vuelta: ")
+                            turn_card = input(other_players[l].name+" escriba la carta que quiere dar vuelta:")
                             print (other_players[l].name+" ha perdido la carta: "+turn_card)
                             log.append(other_players[l].name+" ha perdido la carta: "+turn_card)
                             other_players[l].influence.remove(turn_card)
@@ -172,19 +172,21 @@ def initialize_game():
                             log.append(players[i].name+" no tiene la carta Duque, desafío correcto.")
                             print (players[i].influence)
                             turn_card = input(players[i].name+" escriba la carta que quiere dar vuelta: ")     
-                            print (players[l].name+" ha perdido la carta: "+turn_card)
-                            log.append(players[l].name+" ha perdido la carta: "+turn_card)
-                            players[l].influence.remove("Duque") #se le quita la carta que eligió
+                            print (players[i].name+" ha perdido la carta: "+turn_card)
+                            log.append(players[i].name+" ha perdido la carta: "+turn_card)
+                            players[i].influence.remove(turn_card) #se le quita la carta que eligió
                             turned_around_characters.append(turn_card) #la carta queda dada vuelta en una lista visible para todos                          
-                            break
-                if condition == 1: #no es necesario contraatacar
-                    break
-                else:
-                    break
+                            break                    
+                if condition == 0:
+                    print(players[i].name+" gana 3 mondeas al usar Duque")
+                    Duke.Tax(i, players)
                
             if action == 5:
-                print (players[i].name+" utiliza Asesino")
-                log.append(players[i].name+" utiliza Asesino")
+                for (n, _) in enumerate(other_players):
+                    print (f"{n+1}: {other_players[n].name}")
+                e = int(input("¿Selecciona a quien quieres Asesinar:"))                  
+                print (players[i].name+" quiere asesinar a "+other_players[e-1].name)
+                log.append(players[i].name+" quiere asesinar a "+other_players[e-1].name)
                 for l in range(len(other_players)): #todos los jugadores eligen si desafian o no, de manera aleatoria
                     print ("\n"+other_players[l].name)
                     challenge = challenge_player()
@@ -193,14 +195,20 @@ def initialize_game():
                         print (other_players[l].name+" desafía a "+players[i].name)
                         log.append(other_players[l].name+" desafía a "+players[i].name)
                         if players[i].influence.count("Asesino") > 0: #desafia fallido
-                            condition += 0
-                            print (players[i].name+" tiene la carta Asesino, desafío fallido.")
+                            condition += 1
+                            print ("\n"+players[i].name+" tiene la carta Asesino, desafío fallido.")
                             log.append(players[i].name+" tiene la carta Asesino, desafío fallido.")
-                            print (other_players[l].influence)
+                            show_characters = show_my_characters() #si el jugador quiere ver sus cartas
+                            if show_characters == 1:
+                                print("\nTus cartas son:")
+                                for j in other_players[l].influence:
+                                    print (j)
                             turn_card = input(other_players[l].name+" escriba la carta que quiere dar vuelta: ")
-                            print (other_players[l].name+" ha perdido la carta: "+turn_card)
-                            log.append(other_players[l].name+" ha perdido la carta: "+turn_card)
+                            print (other_players[l].name+" ha perdido la carta "+turn_card)
+                            log.append(other_players[l].name+" ha perdido la carta "+turn_card)
                             other_players[l].influence.remove(turn_card)
+                            print (players[i].name+" tiene que asesinar a "+other_players[l].name)
+                            Assassin.Assassinate(i, players, log, turned_around_characters)
                             players[i].influence.remove("Asesino")
                             players[i].influence.append(influence_deck[0])
                             influence_deck.append("Asesino")
@@ -217,10 +225,9 @@ def initialize_game():
                             players[l].influence.remove("Asesino")
                             turned_around_characters.append(turn_card)
                             break
-                if condition == 1:
-                    break                                     
-                else:   
-                    print ("\nContraataques:")                
+                execute = 0 #condicion para asesinar si nadie contraataca                                     
+                if condition == 0:   
+                    print ("\nContraataques:")              
                     for l in range(len(other_players)): #todos los jugadores eligen si contraatacan o no, de manera aleatoria
                         print ("\n"+other_players[l].name)
                         show_characters = show_my_characters() #si el jugador quiere ver sus cartas
@@ -236,12 +243,15 @@ def initialize_game():
                                 if other_players[l].influence.count("Condesa") > 0:
                                     print ("El asesinato fué bloqueado por la Condesa")
                                 else:
+                                    execute += 0
                                     print ("Se ejecuta el asesinato")
-                                    Assassin.Assassinate(i, players, log, turned_around_characters)
+                                    Assassin.Assassinate(i, other_players, log, turned_around_characters)
                                 break
                             if challenge == 2:  
                                 print ("El asesinato fué bloqueado por la Condesa")
-                                break                  
+                                break
+                if execute == 1:
+                    Assassin.Assassinate(i, other_players, log, turned_around_characters)                 
             if action == 6:
                 print (players[i].name+" utiliza Capitán")
                 log.append(players[i].name+" utiliza Capitán")
@@ -254,7 +264,7 @@ def initialize_game():
                         log.append(other_players[l].name+" desafía a "+players[i].name)
                         if players[i].influence.count("Capitán") > 0: #desafia fallido
                             condition += 0
-                            print (players[i].name+" tiene la carta Capitán, desafío fallido.")
+                            print ("\n"+players[i].name+" tiene la carta Capitán, desafío fallido.")
                             log.append(players[i].name+" tiene la carta Capitán, desafío fallido.")
                             print (other_players[l].influence)
                             turn_card = input(other_players[l].name+" escriba la carta que quiere dar vuelta: ")
@@ -268,7 +278,7 @@ def initialize_game():
                             break
                         else: #desafio acertado
                             condition += 1
-                            print (players[i].name+" no tiene la carta Capitán, desafío correcto.")
+                            print ("\n"+players[i].name+" no tiene la carta Capitán, desafío correcto.")
                             log.append(players[i].name+" no tiene la carta Capitán, desafío correcto.")
                             print (players[i].influence)
                             turn_card = input(players[i].name+" escriba la carta que quiere dar vuelta: ")     
@@ -336,6 +346,7 @@ def initialize_game():
                 print (players[m].name+" ha sido eliminado del juego")
                 log.append(players[m].name+" ha sido eliminado del juego")
                 players.pop(m)
+                break
 
         if len(players) == 1: #solo queda un jugador, termina el juego.
             print ("¡Felicidades "+players[0].name+"! ¡Has ganado!")
