@@ -153,7 +153,7 @@ def initialize_game():
                         print (other_players[l].name+" desafía a "+players[i].name)
                         log.append(other_players[l].name+" desafía a "+players[i].name)
                         if players[i].influence.count("Duque") > 0: #desafia fallido
-                            condition = 0 #Es simplemente una condicion por si es necesario contraatacar o no
+                            condition = 0 
                             print (players[i].name+" tiene la carta Duque, desafío fallido.")
                             log.append(players[i].name+" tiene la carta Duque, desafío fallido.")
                             print (other_players[l].influence)
