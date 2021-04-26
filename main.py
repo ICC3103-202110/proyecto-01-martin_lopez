@@ -117,7 +117,6 @@ def initialize_game():
                 print (players[i].name+" ha sido eliminado del juego")
                 log.append(players[i].name+" ha sido eliminado del juego")
                 players.pop(i)
-                break
             show_game_status() #muestra estado actual del juego antes de que comienze el turno de un jugador
             print (turned_around_characters)
             print ("\n"+"¡Juega "+players[i].name+"!")
@@ -296,10 +295,10 @@ def initialize_game():
             if action == 7:
                 print (players[i].name+" utiliza Embajador")
                 log.append(players[i].name+" utiliza Embajador")
+                condition = 0
                 for l in range(len(other_players)): #todos los jugadores eligen si desafian o no, de manera aleatoria
                     print ("\n"+other_players[l].name)
                     challenge = challenge_player()
-                    condition = 0
                     if challenge == 1:
                         print (other_players[l].name+" desafía a "+players[i].name)
                         log.append(other_players[l].name+" desafía a "+players[i].name)
@@ -328,11 +327,10 @@ def initialize_game():
                             players[l].influence.remove("Embajador")
                             turned_around_characters.append(turn_card)
                             break
-                if condition == 1:
-                    break         
-                else:
-                    #aqui va la opción de contraatacar
-                    pass  #pass es por mientras   
+                if condition == 0:
+                    Ambassador.Exchange(i, players, influence_deck)
+
+                  
             if action == 0:
                 break
                 
