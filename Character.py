@@ -22,13 +22,13 @@ class Character:
             print(f"{k+1}: {all_players[k].name}")
         j = int(input("\nIngresa el número del jugador al cual le aplicarás el golpe "))
         print (all_players[j-1].name+" le quedan "+str(len(all_players[j-1].influence))+" cartas.")
-        z = int(input("\nIngresa el número de la carta que le quitaras a "+all_players[j-1].name+", 0 o 1"))
+        z = int(input("\nIngresa el número de la carta que le quitaras a "+all_players[j-1].name+", 1 o 2"))
         log.append((all_players[int(self)].name+" realizó un golpe a "+all_players[j-1].name+
-                    "\n"+all_players[j-1].name+" da vuelta la carta "+all_players[j-1].influence[z]))
+                    "\n"+all_players[j-1].name+" da vuelta la carta "+all_players[j-1].influence[z-1]))
         print (all_players[int(self)].name+" realizó un golpe a "+all_players[j-1].name+
-                    "\n"+all_players[j-1].name+" da vuelta la carta "+all_players[j-1].influence[z])
-        turned_around_characters.append(all_players[j-1].influence[z])
-        all_players[j-1].influence.pop(z)
+                    "\n"+all_players[j-1].name+" da vuelta la carta "+all_players[j-1].influence[z-1])
+        turned_around_characters.append(all_players[j-1].influence[z-1])
+        all_players[j-1].influence.pop(z-1)
             
 class Duke(Character):
     def __init__(self, name):
@@ -40,7 +40,6 @@ class Duke(Character):
     
     def Blocks_foreign_aid(self, all_players):
         all_players[int(self)].coins -= 2
-        return
         
 class Captain(Character):
     def __init__(self, name):
@@ -59,11 +58,19 @@ class Assassin(Character):
     def __init__(self, name):
         Character.__init__(self, name)
     
-    def Assassinate(self, all_players):
+    def Assassinate(self, all_players, log, turned_around_characters):
         all_players[int(self)].coins -= 3
-        j = int(input("\nIngresa el número del jugador al cual le quitarás una influencia "))
-        all_players[j-1].influence.pop(random.randint(0,1))
-        return
+        for (k, _) in enumerate(all_players):
+            print(f"{k+1}: {all_players[k].name}")
+        j = int(input("\nIngresa el número del jugador al cual asesinaras "))
+        print (all_players[j-1].name+" le quedan "+str(len(all_players[j-1].influence))+" cartas.")
+        z = int(input("\nIngresa el número de la carta que le quitaras a "+all_players[j-1].name+" 1 o 2: "))
+        log.append((all_players[int(self)].name+" asesino a "+all_players[j-1].name+
+                    "\n"+all_players[j-1].name+" da vuelta la carta "+all_players[j-1].influence[z-1]))
+        print (all_players[int(self)].name+" asesino a "+all_players[j-1].name+
+                    "\n"+all_players[j-1].name+" da vuelta la carta "+all_players[j-1].influence[z-1])
+        turned_around_characters.append(all_players[j-1].influence[z-1])
+        all_players[j-1].influence.pop(z-1)
         
 class Ambassador(Character):
     def __init__(self, name):
