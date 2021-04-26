@@ -4,7 +4,7 @@
 """
 from numpy import random
 from Player import Player
-from Character import Character
+from Character import *
 
 players = []
 def shuffle_deck(): #baraja las cartas de manera aleatoria
@@ -49,6 +49,14 @@ def print_actions_and_select():
     print ("0. Se jugó un golpe, terminar turno")
     return int(input())
 
+def print_counter_attacks_and_select():
+    print ("\nSeleccione una carta para contraatacar:")
+    print ("1. Duque")
+    print ("2. Embajador")
+    print ("3. Capitán")
+    print ("4. Condesa")
+    return int(input())
+
 def show_my_characters():
     print ("\n¿Desea mirar sus cartas?")
     print ("1. Si")
@@ -66,6 +74,34 @@ def challenge_player():
     print ("1. Si")
     print ("2. No")
     return int(input())
+
+def counter_attack_player():
+    print ("¿Contraatacar jugador?")
+    print ("1. Si")
+    print ("2. No")
+    return int(input())
+
+def challenge_counter():
+    print ("¿Desafiar el contraataque?")
+    print ("1. Si")
+    print ("2. No")
+    return int(input())
+
+def counter_attack(other_players):
+    for l in range(len(other_players)): #todos los jugadores eligen si contraatacan o no, de manera aleatoria
+        print ("\n"+other_players[l].name)
+        counter = counter_attack_player()
+        if counter == 1:
+            print("\nTus cartas son:")
+            for j in other_players[l].influence:
+                print (j)
+            challenge = challenge_counter()
+            if challenge == 1:
+                x += 1
+            if challenge == 0:
+                x = 0
+                print ("Contraataque exitoso")
+        
 
 def initial_menu():
     while True:
@@ -120,6 +156,7 @@ def initialize_game():
                 for l in range(len(other_players)): #todos los jugadores eligen si desafian o no, de manera aleatoria
                     print ("\n"+other_players[l].name)
                     challenge = challenge_player()
+                    condition = 0
                     if challenge == 1:
                         print (other_players[l].name+" desafía a "+players[i].name)
                         log.append(other_players[l].name+" desafía a "+players[i].name)
@@ -138,7 +175,7 @@ def initialize_game():
                             random.shuffle(influence_deck) #baraja el mazo con la nueva carta cartas
                             break
                         else: #desafio acertado
-                            condition = 1
+                            condition += 1
                             print (players[i].name+" no tiene la carta Duque, desafío correcto.")
                             log.append(players[i].name+" no tiene la carta Duque, desafío correcto.")
                             print (players[i].influence)
@@ -149,22 +186,22 @@ def initialize_game():
                             turned_around_characters.append(turn_card) #la carta queda dada vuelta en una lista visible para todos                          
                             break
                 if condition == 1: #no es necesario contraatacar
-                    break         
+                    break
                 else:
-                    #aqui va la opción de contraatacar
-                    pass  #pass es por mientras                                                                         
-                
+                    break
+               
             if action == 5:
                 print (players[i].name+" utiliza Asesino")
                 log.append(players[i].name+" utiliza Asesino")
                 for l in range(len(other_players)): #todos los jugadores eligen si desafian o no, de manera aleatoria
                     print ("\n"+other_players[l].name)
                     challenge = challenge_player()
+                    condition = 0
                     if challenge == 1:
                         print (other_players[l].name+" desafía a "+players[i].name)
                         log.append(other_players[l].name+" desafía a "+players[i].name)
                         if players[i].influence.count("Asesino") > 0: #desafia fallido
-                            condition = 0
+                            condition += 0
                             print (players[i].name+" tiene la carta Asesino, desafío fallido.")
                             log.append(players[i].name+" tiene la carta Asesino, desafío fallido.")
                             print (other_players[l].influence)
@@ -178,7 +215,7 @@ def initialize_game():
                             random.shuffle(influence_deck) #baraja el mazo con las cartas
                             break
                         else: #desafio acertado
-                            condition = 1
+                            condition += 1
                             print (players[i].name+" no tiene la carta Asesino, desafío correcto.")
                             log.append(players[i].name+" no tiene la carta Asesino, desafío correcto.")
                             print (players[i].influence)
@@ -189,22 +226,42 @@ def initialize_game():
                             turned_around_characters.append(turn_card)
                             break
                 if condition == 1:
-                    break         
-                else:
-                    #aqui va la opción de contraatacar
-                    pass  #pass es por mientras   
-                
+                    break                                     
+                else:   
+                    print ("\nContraataques:")                
+                    for l in range(len(other_players)): #todos los jugadores eligen si contraatacan o no, de manera aleatoria
+                        print ("\n"+other_players[l].name)
+                        show_characters = show_my_characters() #si el jugador quiere ver sus cartas
+                        if show_characters == 1:
+                            print("\nTus cartas son:")
+                            for j in other_players[l].influence:
+                                print (j)
+                        counter = counter_attack_player()                      
+                        if counter == 1:
+                            print ("\n"+players[i].name)
+                            challenge = challenge_counter()
+                            if challenge == 1:
+                                if other_players[l].influence.count("Condesa") > 0:
+                                    print ("El asesinato fué bloqueado por la Condesa")
+                                else:
+                                    print ("Se ejecuta el asesinato")
+                                    Assassin.Assassinate(i, players, log, turned_around_characters)
+                                break
+                            if challenge == 2:  
+                                print ("El asesinato fué bloqueado por la Condesa")
+                                break                  
             if action == 6:
                 print (players[i].name+" utiliza Capitán")
                 log.append(players[i].name+" utiliza Capitán")
                 for l in range(len(other_players)): #todos los jugadores eligen si desafian o no, de manera aleatoria
                     print ("\n"+other_players[l].name)
                     challenge = challenge_player()
+                    condition = 0
                     if challenge == 1:
                         print (other_players[l].name+" desafía a "+players[i].name)
                         log.append(other_players[l].name+" desafía a "+players[i].name)
                         if players[i].influence.count("Capitán") > 0: #desafia fallido
-                            condition = 0
+                            condition += 0
                             print (players[i].name+" tiene la carta Capitán, desafío fallido.")
                             log.append(players[i].name+" tiene la carta Capitán, desafío fallido.")
                             print (other_players[l].influence)
@@ -218,7 +275,7 @@ def initialize_game():
                             random.shuffle(influence_deck) #baraja el mazo con las cartas
                             break
                         else: #desafio acertado
-                            condition = 1
+                            condition += 1
                             print (players[i].name+" no tiene la carta Capitán, desafío correcto.")
                             log.append(players[i].name+" no tiene la carta Capitán, desafío correcto.")
                             print (players[i].influence)
@@ -240,11 +297,12 @@ def initialize_game():
                 for l in range(len(other_players)): #todos los jugadores eligen si desafian o no, de manera aleatoria
                     print ("\n"+other_players[l].name)
                     challenge = challenge_player()
+                    condition = 0
                     if challenge == 1:
                         print (other_players[l].name+" desafía a "+players[i].name)
                         log.append(other_players[l].name+" desafía a "+players[i].name)
                         if players[i].influence.count("Embajador") > 0: #desafia fallido
-                            condition = 0
+                            condition += 0
                             print (players[i].name+" tiene la carta Embajador, desafío fallido.")
                             log.append(players[i].name+" tiene la carta Embajador, desafío fallido.")
                             print (other_players[l].influence)
@@ -258,7 +316,7 @@ def initialize_game():
                             random.shuffle(influence_deck) #baraja el mazo con las cartas
                             break
                         else: #desafio acertado
-                            condition = 1
+                            condition += 1
                             print (players[i].name+" no tiene la carta Embajador, desafío correcto.")
                             log.append(players[i].name+" no tiene la carta Embajador, desafío correcto.")
                             print (players[i].influence)
