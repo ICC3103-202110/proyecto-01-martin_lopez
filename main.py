@@ -18,7 +18,7 @@ influence_deck = shuffle_deck()
 
 def create_player():
     name = input("ingresa el nombre del jugador ")
-    coins = 2
+    coins = 8 #por mientras
     influence = []
     influence.append(influence_deck[0]) 
     influence_deck.pop(0) 
@@ -46,6 +46,7 @@ def print_actions_and_select():
     print ("5. Asesino")
     print ("6. Capitán")
     print ("7. Embajador")
+    print ("0. Se jugó un golpe, terminar turno")
     return int(input())
 
 def show_my_characters():
@@ -93,8 +94,7 @@ def initialize_game():
                 for j in players[i].influence:
                     print (j)
             if players[i].coins > 9: #si un jugador tiene 10 monedas o más debe hacer un golpe                
-                log.append(players[i].name+" tiene mas de 9 monedas, por lo que paga 7 monedas y realiza un Golpe.")
-                break
+                Character.coup(i, players, log, turned_around_characters)
             other_players = players[:] #copia de la lista players
             other_players.pop(i) #lista de jugadores que no es su turno
             random.shuffle(other_players) #de esta manera el desafio o contraataque será de manera aleatoria si mas de uno quiere desafiar
@@ -108,7 +108,7 @@ def initialize_game():
                 print (players[i].name+" obtiene 2 monedas por Ayuda Extranjera")
                 log.append(players[i].name+" obtiene 2 monedas por Ayuda Extranjera")
             if action == 3:
-                log.append(players[i].name+" paga 7 monedas y realiza un Golpe.") #no puede ser desafiado ni contraatacado
+                Character.coup(i, players, log, turned_around_characters)
             if action == 4:
                 print (players[i].name+" utiliza Duque")
                 log.append(players[i].name+" utiliza Duque")
@@ -268,6 +268,8 @@ def initialize_game():
                 else:
                     #aqui va la opción de contraatacar
                     pass  #pass es por mientras   
+            if action == 0:
+                break
                 
         log.append(" ") #agrega un espacio para diferenciar los turnos
         show_log = show_log_game()
