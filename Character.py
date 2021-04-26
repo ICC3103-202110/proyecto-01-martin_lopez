@@ -77,17 +77,20 @@ class Ambassador(Character):
         Character.__init__(self, name)
     
     def Exchange(self, all_players, influence_deck):
+        all_players[int(self)].influence.append(influence_deck[0])
+        all_players[int(self)].influence.append(influence_deck[0])
         print("\nTus cartas son:")
         for j in all_players[int(self)].influence:
             print (j)
-        a = input("\nIngresa la posición de la 1era que quiere sacar (si no un ´no´): ")
-        a2 = input("\nIngresa la posición de la 2da que quieres sacar (si no un ´no´): ") 
-        if a != "no":
-            all_players[int(self)].influence.pop(a)
-            all_players[int(self)].influence.append(influence_deck[0])
-        if a2 != "no":
-            all_players[int(self)].influence.pop(a2)
-            all_players[int(self)].influence.append(influence_deck[0])
-        return
+        a = int(input("\nIngresa la posición de la 1era que quiere sacar: "))
+        all_players[int(self)].influence.pop(a)
+        print("\nTus cartas son:")
+        for j in all_players[int(self)].influence:
+            print (j)
+        a2 = int(input("\nIngresa la posición de la 2da que quieres sacar: ")) 
+        all_players[int(self)].influence.pop(a2)
+        random.shuffle(influence_deck)
+        
+        
         
         
