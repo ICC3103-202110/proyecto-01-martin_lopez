@@ -113,10 +113,12 @@ def initialize_game():
         shift_counter += 1 
         log.append("Turno "+str(shift_counter)) #agrega contador de turnos al log del juego
         for i in range(len(players)): #un turno
-            if len(players[i].influence) < 1: #comprobar si al juagador le quedan fluencias
-                print (players[i].name+" ha sido eliminado del juego")
-                log.append(players[i].name+" ha sido eliminado del juego")
-                players.pop(i)
+            for k in range(len(players)) 
+                if len(players[m].influence) < 1:
+                    print (players[m].name+" ha sido eliminado del juego")
+                    log.append(players[m].name+" ha sido eliminado del juego")
+                    players.pop(m)
+                    break
             show_game_status() #muestra estado actual del juego antes de que comienze el turno de un jugador
             print (turned_around_characters)
             print ("\n"+"¡Juega "+players[i].name+"!")
@@ -240,17 +242,28 @@ def initialize_game():
                             challenge = challenge_counter()
                             if challenge == 1:
                                 if other_players[l].influence.count("Condesa") > 0:
+                                    execute += 1
                                     print ("El asesinato fué bloqueado por la Condesa")
+                                    log.append("El robo fué bloqueado por la Condesa")
+                                    other_players[l].influence.remove("Condesa")
+                                    other_players[l].influence.append(influence_deck[0])
+                                    influence_deck.append("Condesa")
+                                    random.shuffle(influence_deck)
                                 else:
                                     execute += 0
                                     print ("Se ejecuta el asesinato")
-                                    Assassin.Assassinate(i, other_players, log, turned_around_characters)
+                                    Assassin.Assassinate(i, players, log, turned_around_characters)
+                                    players[i].influence.remove("Asesino")
+                                    players[i].influence.append(influence_deck[0])
+                                    influence_deck.append("Asesino")
+                                    random.shuffle(influence_deck)
                                 break
                             if challenge == 2:  
+                                execute += 1
                                 print ("El asesinato fué bloqueado por la Condesa")
                                 break
-                if execute == 1:
-                    Assassin.Assassinate(i, other_players, log, turned_around_characters)                 
+                if execute == 0:
+                    Assassin.Assassinate(i, players, log, turned_around_characters)                 
             if action == 6:
                 print (players[i].name+" utiliza Capitán")
                 log.append(players[i].name+" utiliza Capitán")
@@ -285,13 +298,54 @@ def initialize_game():
                             log.append(players[l].name+" ha perdido la carta: "+turn_card)
                             players[l].influence.remove("Capitán")
                             turned_around_characters.append(turn_card)
-                            break
-                if condition == 1:
-                    break         
-                else:
-                    #aqui va la opción de contraatacar
-                    pass  #pass es por mientras   
-                
+                            break              
+                    execute = 0 #condicion para asesinar si nadie contraataca                                     
+                if condition == 0:   
+                    print ("\nContraataques:")              
+                    for l in range(len(other_players)): #todos los jugadores eligen si contraatacan o no, de manera aleatoria
+                        print ("\n"+other_players[l].name)
+                        show_characters = show_my_characters() #si el jugador quiere ver sus cartas
+                        if show_characters == 1:
+                            print("\nTus cartas son:")
+                            for j in other_players[l].influence:
+                                print (j)
+                        counter = counter_attack_player()                      
+                        if counter == 1:
+                            print ("\n"+players[i].name)
+                            challenge = challenge_counter()
+                            if challenge == 1:
+                                if other_players[l].influence.count("Capitán") > 0:
+                                    execute += 1
+                                    print ("El robo fué bloqueado por el Capitán")
+                                    log.append("El robo fué bloqueado por el Capitán")
+                                    other_players[l].influence.remove("Capitán")
+                                    other_players[l].influence.append(influence_deck[0])
+                                    influence_deck.append("Capitán")
+                                    random.shuffle(influence_deck)
+
+                                elif other_players[l].influence.count("Embajador") > 0:
+                                    execute += 1
+                                    print ("El robo fué bloqueado por el Embajador")
+                                    log.append("El robo fué bloqueado por el Embajador")
+                                    other_players[l].influence.remove("Embajador")
+                                    other_players[l].influence.append(influence_deck[0])
+                                    influence_deck.append("Embajador")
+                                    random.shuffle(influence_deck)
+                                else:
+                                    execute += 0
+                                    print ("Se ejecuta el robo")
+                                    Captain.Steal(i, players, log)
+                                    players[i].influence.remove("Capitán")
+                                    players[i].influence.append(influence_deck[0])
+                                    influence_deck.append("Capitán")
+                                    random.shuffle(influence_deck)
+                                break
+                            if challenge == 2:  
+                                print ("El asesinato fué bloqueado por la Condesa")
+                                break
+                if execute == 0:
+                    Captain.Steal(i, players, log)                       
+
             if action == 7:
                 print (players[i].name+" utiliza Embajador")
                 log.append(players[i].name+" utiliza Embajador")
