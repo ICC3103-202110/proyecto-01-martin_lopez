@@ -18,7 +18,7 @@ influence_deck = shuffle_deck()
 
 def create_player():
     name = input("ingresa el nombre del jugador ")
-    coins = 4 #por mientras
+    coins = 2 #por mientras
     influence = []
     influence.append(influence_deck[0]) 
     influence_deck.pop(0) 
