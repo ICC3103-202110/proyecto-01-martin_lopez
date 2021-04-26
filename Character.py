@@ -16,12 +16,20 @@ class Character:
         all_players[int(self)].coins += 2
         
         
-    def coup(self, all_players):
+    def coup(self, all_players, log, turned_around_characters):
         all_players[int(self)].coins -= 7
+        for (k, _) in enumerate(all_players):
+            print(f"{k+1}: {all_players[k].name}")
         j = int(input("\nIngresa el número del jugador al cual le aplicarás el golpe "))
-        all_players[j-1].influence.pop(random.randint(0,1))
-        
-    
+        print (all_players[j-1].name+" le quedan "+str(len(all_players[j-1].influence))+" cartas.")
+        z = int(input("\nIngresa el número de la carta que le quitaras a "+all_players[j-1].name+", 0 o 1"))
+        log.append((all_players[int(self)].name+" realizó un golpe a "+all_players[j-1].name+
+                    "\n"+all_players[j-1].name+" da vuelta la carta "+all_players[j-1].influence[z]))
+        print (all_players[int(self)].name+" realizó un golpe a "+all_players[j-1].name+
+                    "\n"+all_players[j-1].name+" da vuelta la carta "+all_players[j-1].influence[z])
+        turned_around_characters.append(all_players[j-1].influence[z])
+        all_players[j-1].influence.pop(z)
+            
 class Duke(Character):
     def __init__(self, name):
         Character.__init__(self, name)
