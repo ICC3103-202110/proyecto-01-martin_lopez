@@ -49,14 +49,6 @@ def print_actions_and_select():
     print ("0. Se jugó un golpe, terminar turno")
     return int(input())
 
-def print_counter_attacks_and_select():
-    print ("\nSeleccione una carta para contraatacar:")
-    print ("1. Duque")
-    print ("2. Embajador")
-    print ("3. Capitán")
-    print ("4. Condesa")
-    return int(input())
-
 def show_my_characters():
     print ("\n¿Desea mirar sus cartas?")
     print ("1. Si")
